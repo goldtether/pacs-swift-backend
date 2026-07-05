@@ -1,6 +1,6 @@
 # PACS SWIFT Backend
 
-## 🚀 Быстрый старт
+## 🚀 Quick start
 
 ```bash
 npm install
