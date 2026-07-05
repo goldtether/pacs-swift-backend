@@ -11,6 +11,14 @@ router.post('/create', async (req, res) => {
     const userId = req.user.id;
     const data = req.body;
 
+    // ВАЛИДАЦИЯ
+    if (!data.amount || !data.debtorName || !data.debtorIban || !data.debtorBic || !data.creditorName || !data.creditorIban || !data.creditorBic) {
+      return res.status(400).json({
+        success: false,
+        error: 'Missing required fields: amount, debtorName, debtorIban, debtorBic, creditorName, creditorIban, creditorBic'
+      });
+    }
+
     const transactionId = `TXN${Date.now()}${Math.floor(Math.random() * 1000)}`;
     const uetr = uuidv4();
 
@@ -36,7 +44,11 @@ router.post('/create', async (req, res) => {
       transaction
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Create payment error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
   }
 });
 
@@ -50,12 +62,22 @@ router.get('/status/:transactionId', async (req, res) => {
     });
 
     if (!transaction) {
-      return res.status(404).json({ error: 'Transaction not found' });
+      return res.status(404).json({ 
+        success: false, 
+        error: 'Transaction not found' 
+      });
     }
 
-    res.json({ success: true, transaction });
+    res.json({ 
+      success: true, 
+      transaction 
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Status error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
   }
 });
 
