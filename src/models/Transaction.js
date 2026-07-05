@@ -22,7 +22,7 @@ const Transaction = sequelize.define('Transaction', {
     allowNull: false
   },
   status: {
-    type: DataTypes.ENUM('PENDING', 'ACCEPTED', 'SETTLED', 'REJECTED'),
+    type: DataTypes.ENUM('PENDING', 'PROCESSING', 'ACCEPTED', 'SETTLED', 'REJECTED', 'FAILED'),
     defaultValue: 'PENDING'
   },
   amount: {
@@ -56,9 +56,18 @@ const Transaction = sequelize.define('Transaction', {
   creditorBic: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  xmlMessage: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  },
+  errorMessage: {
+    type: DataTypes.TEXT,
+    allowNull: true
   }
 }, {
-  tableName: 'transactions'
+  tableName: 'transactions',
+  timestamps: true
 });
 
 module.exports = Transaction;
