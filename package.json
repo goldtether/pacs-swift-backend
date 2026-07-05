@@ -1,0 +1,25 @@
+{
+  "name": "pacs-swift-backend",
+  "version": "2.0.0",
+  "description": "PACS SWIFT Backend",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.0",
+    "uuid": "^9.0.0",
+    "pg": "^8.11.0",
+    "sequelize": "^6.32.0",
+    "helmet": "^7.0.0",
+    "compression": "^1.7.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
