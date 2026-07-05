@@ -1,20 +1,28 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-module.exports = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT || 5432,
+// ЕСЛИ НЕТ БАЗЫ ДАННЫХ, ИСПОЛЬЗУЙТЕ SQLITE
+let sequelize;
+
+if (process.env.DATABASE_URL) {
+  // Для облачных сервисов (Railway, Render)
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
     logging: false,
-    pool: {
-      max: 10,
-      min: 2,
-      acquire: 30000,
-      idle: 10000
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
     }
-  }
-);
+  });
+} else {
+  // Для локальной разработки
+  sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: './database.sqlite',
+    logging: false
+  });
+}
+
+module.exports = sequelize;
