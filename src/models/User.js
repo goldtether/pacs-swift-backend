@@ -22,7 +22,8 @@ const User = sequelize.define('User', {
     allowNull: false
   }
 }, {
-  tableName: 'users'
+  tableName: 'users',
+  timestamps: true
 });
 
 User.prototype.comparePassword = async function(password) {
